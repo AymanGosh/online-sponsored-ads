@@ -7,11 +7,11 @@ import java.util.List;
 
 
 @Component
-public class Campaignmodel {
+public class CampaignModel {
 
     List<String> names= new ArrayList<>();
 
-    Campaignmodel(){
+    CampaignModel(){
         names.add("Black Friday");
         names.add("Ramdan");
     }
