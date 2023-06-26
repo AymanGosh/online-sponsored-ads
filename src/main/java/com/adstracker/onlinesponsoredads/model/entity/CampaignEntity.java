@@ -29,7 +29,7 @@ public class CampaignEntity {
 
     @ManyToMany
     @JoinTable(
-            name="campain_product",
+            name="campaign_product",
             joinColumns = @JoinColumn(name="campaign_id"),
             inverseJoinColumns=@JoinColumn(name="product_id")
     )
