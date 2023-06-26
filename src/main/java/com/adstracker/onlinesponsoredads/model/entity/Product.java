@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Table(name="products")
 @Entity
 @Data
@@ -20,6 +22,9 @@ public class Product {
     private Integer productId;
     @Column(name="product_name")
     private String productName;
+
+    @ManyToMany(mappedBy = "products")
+    private List<CampaignEntity> campaigns;
 
     public static Product DtoToEntity(ProductDto productDto){
         return Product.builder().

@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 
 @Table(name="campaigns")
 @Entity
@@ -24,4 +26,13 @@ public class CampaignEntity {
     private Integer campaignId;
     @Column(name="campaign_name")
     private String campaignName;
+
+    @ManyToMany
+    @JoinTable(
+            name="campain_product",
+            joinColumns = @JoinColumn(name="campaign_id"),
+            inverseJoinColumns=@JoinColumn(name="product_id")
+    )
+    private List<Product> products;
+
 }
