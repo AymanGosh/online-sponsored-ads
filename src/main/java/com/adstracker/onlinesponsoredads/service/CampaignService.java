@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,7 +37,6 @@ public class CampaignService {
         newCampaign.setCampaignName(campaign.getCampaignName());
         newCampaign.setBid(campaign.getBid());
         newCampaign.setStartDate(campaign.getStartDate());
-
         newCampaign.getProducts()
                 .addAll(campaign
                         .getProducts()
@@ -48,13 +49,22 @@ public class CampaignService {
         return campaignRepo.save(newCampaign);
     }
 
-    public List<Campaign> serveAd(String category) {
+    public  Product serveAd(String category) {
+        List<Campaign> activeCampaigns= getActiveCampaigns();
+//        if (activeCampaigns.isEmpty()) {
+//            Campaign highestBidCampaign = getHighestBidCampaign(campaignRepo.findAll());
+//            Product promotedProduct = highestBidCampaign.getProducts().stream().findFirst().orElse(new Product());
+//            return promotedProduct;
+//        }
 
-        var campaignActiveDays =10;
-        Date startDate = convertToDateViaSqlDate(LocalDate.now());
-        Date endDate = convertToDateViaSqlDate(LocalDate.now().plusDays(campaignActiveDays));
-        List<Campaign> activeCampaign= getActiveCampaigns();
-        return activeCampaign;
+        List<Campaign> campaignsWithMatchingCategory = activeCampaigns.stream()
+                .filter(campaign -> campaign.getProducts().stream()
+                        .anyMatch(product -> product.getProductCategory().equals(category)))
+                .collect(Collectors.toList());
+
+        Campaign highestBidCampaign = getHighestBidCampaign(campaignsWithMatchingCategory);
+        Product promotedProduct = highestBidCampaign.getProducts().stream().filter(p->p.getProductCategory().equals(category)).findFirst().orElse(new Product());
+        return promotedProduct;
     }
     public List<Campaign> getActiveCampaigns(){
         var campaignActiveDays =10;
@@ -64,5 +74,9 @@ public class CampaignService {
     }
     public Date convertToDateViaSqlDate(LocalDate dateToConvert) {
         return java.sql.Date.valueOf(dateToConvert);
+    }
+
+    private Campaign getHighestBidCampaign(List<Campaign> campaigns) {
+        return Collections.max(campaigns, Comparator.comparingDouble(Campaign::getBid));
     }
 }

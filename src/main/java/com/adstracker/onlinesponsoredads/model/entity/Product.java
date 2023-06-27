@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Objects;
 
 @Table(name="products")
 @Entity
@@ -88,5 +89,29 @@ public class Product {
 
     public void setProductPrice(Double productPrice) {
         this.productPrice = productPrice;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(productId, product.productId) && Objects.equals(productName, product.productName) && Objects.equals(productCategory, product.productCategory) && Objects.equals(productPrice, product.productPrice) && Objects.equals(campaigns, product.campaigns);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(productId, productName, productCategory, productPrice, campaigns);
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productId=" + productId +
+                ", productName='" + productName + '\'' +
+                ", productCategory='" + productCategory + '\'' +
+                ", productPrice=" + productPrice +
+                ", campaigns=" + campaigns +
+                '}';
     }
 }

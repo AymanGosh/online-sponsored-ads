@@ -1,6 +1,7 @@
 package com.adstracker.onlinesponsoredads.controller;
 
 import com.adstracker.onlinesponsoredads.model.entity.Campaign;
+import com.adstracker.onlinesponsoredads.model.entity.Product;
 import com.adstracker.onlinesponsoredads.service.CampaignService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,8 +33,7 @@ public class CampaignController {
 
     @GetMapping("/serve-ad")
     //public ResponseEntity<Product> serveAd(@RequestParam("category") String category) {
-    public List<Campaign> serveAd(@RequestParam String category) {
-
+    public  Product serveAd(@RequestParam String category) {
         return campaignService.serveAd(category);
 
     }
