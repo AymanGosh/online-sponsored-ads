@@ -13,16 +13,6 @@ public class ProductService {
     @Autowired
     private ProductRepo productRepo;
 
-//    public Product getProductById(Integer productId){
-//        Optional<Product> product = this.productRepo.findById(productId);
-//        if(product.isPresent()){
-//            return product.get();
-//        }
-//        else
-//            return new Product();
-//        //return product.orElse(new Product());
-//    }
-
     public Product findProductById(Integer productId) {
         return productRepo.findByProductId(productId);
     }

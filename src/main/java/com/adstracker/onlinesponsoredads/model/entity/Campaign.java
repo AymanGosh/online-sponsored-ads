@@ -26,11 +26,12 @@ public class Campaign {
     @Column(name="campaign_name")
     private String campaignName;
 
-//    @ManyToMany(cascade = CascadeType.ALL)
-////    @JoinTable(name = "campaign_product",
-////            joinColumns = @JoinColumn(name = "campaign_id",referencedColumnName = "campaign_id"),
-////            inverseJoinColumns = @JoinColumn(name = "product_id",referencedColumnName = "product_id")
-////    )
+    @Column(name="campaign_start_date")
+    private Date startDate;
+
+    @Column(name="campaign_bid")
+    private Double bid;
+
     @ManyToMany(mappedBy = "campaigns", cascade = CascadeType.ALL)
     private Collection<Product> products = new ArrayList<>();
 
@@ -56,5 +57,21 @@ public class Campaign {
 
     public void setProducts(Collection<Product> products) {
         this.products = products;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Double getBid() {
+        return bid;
+    }
+
+    public void setBid(Double bid) {
+        this.bid = bid;
     }
 }

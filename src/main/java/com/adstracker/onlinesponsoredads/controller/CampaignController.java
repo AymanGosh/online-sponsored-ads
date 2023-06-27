@@ -1,6 +1,5 @@
 package com.adstracker.onlinesponsoredads.controller;
 
-
 import com.adstracker.onlinesponsoredads.model.entity.Campaign;
 import com.adstracker.onlinesponsoredads.service.CampaignService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +24,8 @@ public class CampaignController {
 
 
     @PostMapping
-    public String saveCampaign(@RequestBody Campaign campaign) {
-        campaignService.saveCampaign(campaign);
-        return("OK");
+    public Campaign saveCampaign(@RequestBody Campaign campaign) {
+        return campaignService.saveCampaign(campaign);
+
     }
 }

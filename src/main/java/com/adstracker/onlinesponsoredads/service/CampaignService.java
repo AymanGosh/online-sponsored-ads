@@ -27,11 +27,14 @@ public class CampaignService {
         return campaignRepo.findAll();
     }
 
-    public Campaign saveCampaign(Campaign customer) {
+    public Campaign saveCampaign(Campaign campaign) {
         Campaign newCampaign = new Campaign();
-        newCampaign.setCampaignName(customer.getCampaignName());
+        newCampaign.setCampaignName(campaign.getCampaignName());
+        newCampaign.setBid(campaign.getBid());
+        newCampaign.setStartDate(campaign.getStartDate());
+
         newCampaign.getProducts()
-                .addAll(customer
+                .addAll(campaign
                         .getProducts()
                         .stream()
                         .map(v -> {
