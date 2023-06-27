@@ -41,7 +41,7 @@ INSERT INTO campaigns (campaign_name, campaign_start_date, campaign_bid)
 VALUES ('Summer Sale', '2023-07-01', 10.50);
 
 INSERT INTO campaigns (campaign_name, campaign_start_date, campaign_bid)
-VALUES ('Back to School', '2023-08-15', 8.75);
+VALUES ('Back to School', '2023-07-01', 8.75);
 
 INSERT INTO campaigns (campaign_name, campaign_start_date, campaign_bid)
 VALUES ('Holiday Season', '2023-11-20', 12.00);
@@ -71,5 +71,5 @@ INSERT INTO campaigns (campaign_name, campaign_start_date, campaign_bid)
 VALUES ('Christmas Special', '2025-12-20', 12.50);
 
 INSERT INTO campaigns (campaign_name, campaign_start_date, campaign_bid)
-VALUES ('New Year Sale', '2026-01-01', 9.50);
+VALUES ('New Year Sale', '2023-07-07', 9.50);
 

@@ -6,6 +6,9 @@ import com.adstracker.onlinesponsoredads.repository.CampaignRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,4 +48,21 @@ public class CampaignService {
         return campaignRepo.save(newCampaign);
     }
 
+    public List<Campaign> serveAd(String category) {
+
+        var campaignActiveDays =10;
+        Date startDate = convertToDateViaSqlDate(LocalDate.now());
+        Date endDate = convertToDateViaSqlDate(LocalDate.now().plusDays(campaignActiveDays));
+        List<Campaign> activeCampaign= getActiveCampaigns();
+        return activeCampaign;
+    }
+    public List<Campaign> getActiveCampaigns(){
+        var campaignActiveDays =10;
+        Date startDate = convertToDateViaSqlDate(LocalDate.now());
+        Date endDate = convertToDateViaSqlDate(LocalDate.now().plusDays(campaignActiveDays));
+        return campaignRepo.findByStartDateBetween(startDate,endDate);
+    }
+    public Date convertToDateViaSqlDate(LocalDate dateToConvert) {
+        return java.sql.Date.valueOf(dateToConvert);
+    }
 }

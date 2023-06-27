@@ -28,4 +28,13 @@ public class CampaignController {
         return campaignService.saveCampaign(campaign);
 
     }
+
+
+    @GetMapping("/serve-ad")
+    //public ResponseEntity<Product> serveAd(@RequestParam("category") String category) {
+    public List<Campaign> serveAd(@RequestParam String category) {
+
+        return campaignService.serveAd(category);
+
+    }
 }
