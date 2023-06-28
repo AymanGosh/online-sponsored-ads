@@ -2,10 +2,12 @@
 This project is focused on developing a powerful module that empowers sellers to effortlessly create and manage promotional campaigns for their products.
 
 
-| APIs            | METHOD | URL                                      | Parameters                                           | Expected result |
-| ----------------|--------|------------------------------------------|------------------------------------------------------|-----------------|   
-| Create campaign | POST   | http://localhost:8080/campaigns          | @RequestBody = campaignName<String> & products<LIST> |                 |
-| Serve Ad        | GET    | http://localhost:8080/campaigns/serve-ad | @RequestParam = category                             |                 |
+| APIs                  | METHOD | URL                                      | Parameters                                           | Expected result                                                                                                            |
+|-----------------------|--------|------------------------------------------|------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|   
+| Create campaign       | POST   | http://localhost:8080/campaigns          | @RequestBody = campaignName::String & products::LIST | a campaign is created.                                                                                                     |
+| Serve Ad              | GET    | http://localhost:8080/campaigns/serve-ad | @RequestParam = category::String                     | return a single promoted product, the one with the highest bid,belonging to active campaign/s from the specified category. |
+| Get all the products  | GET    | http://localhost:8080/products           | null                                                 | Get all the products from DB.                                                                                              |
+| Get all the campaigns | GET    | http://localhost:8080/campaigns          | null                                                 | Get all the campaigns from DB.                                                                                             |
 
 -------------
 # Examples:
@@ -13,60 +15,218 @@ This project is focused on developing a powerful module that empowers sellers to
 #### RequestBody:
 ```json
 {
-  "campaignName":"Valentine day",
+  "campaignName":"Summer Sale",
+  "startDate": "2023-07-05",
+  "bid": 9999,
   "products":[
     {
       "productId":1
     },
     {
       "productId":2
+    },
+    {
+      "productId":6
+    },
+    {
+      "productId":8
     }
+
   ]
 }
 ```
 #### Result :
- 
+ ```json
+ {
+  "campaignId": 1,
+  "campaignName": "Summer Sale",
+  "startDate": "2023-07-05T00:00:00.000+00:00",
+  "bid": 9999.0,
+  "products": [
+    {
+      "productId": 1,
+      "productName": "MacBook Pro",
+      "productCategory": "Gaming",
+      "productPrice": 1999.99
+    },
+    {
+      "productId": 2,
+      "productName": "Canon EOS 5D Mark IV",
+      "productCategory": "Electronics",
+      "productPrice": 2499.99
+    },
+    {
+      "productId": 6,
+      "productName": "Fitbit Charge 4",
+      "productCategory": "Wearable Tech",
+      "productPrice": 129.99
+    },
+    {
+      "productId": 8,
+      "productName": "Nintendo Switch",
+      "productCategory": "Gaming",
+      "productPrice": 299.99
+    }
+  ]
+}
+```
 ---------------------
 ### GET : http://localhost:8080/campaigns
 #### Result : 
 ```json
 [
-    {
-        "campaignId": 1,
-        "campaignName": "Black Friday",
-        "products": []
-    },
-    {
-        "campaignId": 2,
-        "campaignName": "Summer Sales",
-        "products": []
-    },
-    {
-        "campaignId": 3,
-        "campaignName": "Valentine day",
-        "products": [
-                      {
-                        "productId": 1,
-                        "productName": "ElectraWave Bluetooth Speaker"
-                        },
-                        {
-                        "productId": 2,
-                        "productName": "PowerPulse Wireless Charger"
-                        }
-                    ]
-    }
+  {
+    "campaignId": 1,
+    "campaignName": "Summer Sale",
+    "startDate": "2023-07-05T00:00:00.000+00:00",
+    "bid": 9999.0,
+    "products": [
+      {
+        "productId": 2,
+        "productName": "Canon EOS 5D Mark IV",
+        "productCategory": "Electronics",
+        "productPrice": 2499.99
+      },
+      {
+        "productId": 6,
+        "productName": "Fitbit Charge 4",
+        "productCategory": "Wearable Tech",
+        "productPrice": 129.99
+      },
+      {
+        "productId": 8,
+        "productName": "Nintendo Switch",
+        "productCategory": "Gaming",
+        "productPrice": 299.99
+      },
+      {
+        "productId": 1,
+        "productName": "MacBook Pro",
+        "productCategory": "Gaming",
+        "productPrice": 1999.99
+      }
+    ]
+  },
+  {
+    "campaignId": 2,
+    "campaignName": "Summer Vacation",
+    "startDate": "2023-07-03T00:00:00.000+00:00",
+    "bid": 200000.0,
+    "products": [
+      {
+        "productId": 1,
+        "productName": "MacBook Pro",
+        "productCategory": "Gaming",
+        "productPrice": 1999.99
+      },
+      {
+        "productId": 4,
+        "productName": "Samsung QLED Q90R",
+        "productCategory": "Electronics",
+        "productPrice": 1999.99
+      }
+    ]
+  }
 ]
 ```
 -------------------------
-http://localhost:8080/campaigns/serve-ad?category=Electronics
+### GET : http://localhost:8080/campaigns/serve-ad?category=Electronics
+#### Result :
 ```json
 {
-"productId": 2,
-"productName": "Canon EOS 5D Mark IV",
-"productCategory": "Electronics",
-"productPrice": 2499.99
+  "productId": 4,
+  "productName": "Samsung QLED Q90R",
+  "productCategory": "Electronics",
+  "productPrice": 1999.99
 }
 ```
+---------
+### GET : http://localhost:8080/products
+#### Result :
+```json
+[
+    {
+        "productId": 1,
+        "productName": "MacBook Pro",
+        "productCategory": "Gaming",
+        "productPrice": 1999.99
+    },
+    {
+        "productId": 2,
+        "productName": "Canon EOS 5D Mark IV",
+        "productCategory": "Electronics",
+        "productPrice": 2499.99
+    },
+    {
+        "productId": 3,
+        "productName": "Nike Air Max 270",
+        "productCategory": "Footwear",
+        "productPrice": 149.99
+    },
+    {
+        "productId": 4,
+        "productName": "Samsung QLED Q90R",
+        "productCategory": "Electronics",
+        "productPrice": 1999.99
+    },
+    {
+        "productId": 5,
+        "productName": "Amazon Echo Dot",
+        "productCategory": "Smart Home",
+        "productPrice": 49.99
+    },
+    {
+        "productId": 6,
+        "productName": "Fitbit Charge 4",
+        "productCategory": "Wearable Tech",
+        "productPrice": 129.99
+    },
+    {
+        "productId": 7,
+        "productName": "Dyson V11 Absolute",
+        "productCategory": "Home Appliances",
+        "productPrice": 599.99
+    },
+    {
+        "productId": 8,
+        "productName": "Nintendo Switch",
+        "productCategory": "Gaming",
+        "productPrice": 299.99
+    },
+    {
+        "productId": 9,
+        "productName": "Adidas Ultraboost",
+        "productCategory": "Footwear",
+        "productPrice": 179.99
+    },
+    {
+        "productId": 10,
+        "productName": "LG OLED CX Series",
+        "productCategory": "Electronics",
+        "productPrice": 2499.99
+    },
+    {
+        "productId": 11,
+        "productName": "Apple Watch Series 6",
+        "productCategory": "Wearable Tech",
+        "productPrice": 399.99
+    },
+    {
+        "productId": 12,
+        "productName": "Bose QuietComfort 35 II",
+        "productCategory": "Audio",
+        "productPrice": 349.99
+    },
+    {
+        "productId": 13,
+        "productName": "Sony WH-1000XM4",
+        "productCategory": "Audio",
+        "productPrice": 349.99
+    }
+]
+```
+--------
+
 ## APIs
 ### Create campaign - api for creating a campaign
 -   Parameters:
