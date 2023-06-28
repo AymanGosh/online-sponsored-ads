@@ -73,3 +73,10 @@ VALUES ('Sony WH-1000XM4', 'Audio', 349.99);
 --INSERT INTO campaigns (campaign_name, campaign_start_date, campaign_bid)
 --VALUES ('New Year Sale', '2023-07-07', 9.50);
 
+-->-----------------------------------------------------------------
+
+
+
+
+
+
