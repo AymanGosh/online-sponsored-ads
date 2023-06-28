@@ -51,11 +51,11 @@ public class CampaignService {
 
     public  Product serveAd(String category) {
         List<Campaign> activeCampaigns= getActiveCampaigns();
-//        if (activeCampaigns.isEmpty()) {
-//            Campaign highestBidCampaign = getHighestBidCampaign(campaignRepo.findAll());
-//            Product promotedProduct = highestBidCampaign.getProducts().stream().findFirst().orElse(new Product());
-//            return promotedProduct;
-//        }
+        if (activeCampaigns.isEmpty()) {
+            Campaign highestBidCampaign = getHighestBidCampaign(campaignRepo.findAll());
+            Product promotedProduct = highestBidCampaign.getProducts().stream().findFirst().orElse(new Product());
+            return promotedProduct;
+        }
 
         List<Campaign> campaignsWithMatchingCategory = activeCampaigns.stream()
                 .filter(campaign -> campaign.getProducts().stream()
@@ -77,6 +77,7 @@ public class CampaignService {
     }
 
     private Campaign getHighestBidCampaign(List<Campaign> campaigns) {
+        if(campaigns.isEmpty()) return new Campaign();
         return Collections.max(campaigns, Comparator.comparingDouble(Campaign::getBid));
     }
 }
