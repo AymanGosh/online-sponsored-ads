@@ -2,12 +2,12 @@
 This project is focused on developing a powerful module that empowers sellers to effortlessly create and manage promotional campaigns for their products.
 
 
-| APIs                  | METHOD | URL                                      | Parameters                                           | Expected result                                                                                                            |
-|-----------------------|--------|------------------------------------------|------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|   
-| Create campaign       | POST   | http://localhost:8080/campaigns          | @RequestBody = campaignName::String & products::LIST | a campaign is created.                                                                                                     |
-| Serve Ad              | GET    | http://localhost:8080/campaigns/serve-ad | @RequestParam = category::String                     | return a single promoted product, the one with the highest bid,belonging to active campaign/s from the specified category. |
-| Get all the products  | GET    | http://localhost:8080/products           | null                                                 | Get all the products from DB.                                                                                              |
-| Get all the campaigns | GET    | http://localhost:8080/campaigns          | null                                                 | Get all the campaigns from DB.                                                                                             |
+| APIs                  | METHOD | URL                                      | Parameters                                           | Expected result                                                               |
+|-----------------------|--------|------------------------------------------|------------------------------------------------------|-------------------------------------------------------------------------------|   
+| Create campaign       | POST   | http://localhost:8080/campaigns          | @RequestBody = campaignName::String & products::LIST | a campaign is created.                                                        |
+| Serve Ad              | GET    | http://localhost:8080/campaigns/serve-ad | @RequestParam = category::String                     | highest-bid promoted product from active campaigns in the specified category. |
+| Get all the products  | GET    | http://localhost:8080/products           | null                                                 | all the products from DB.                                                     |
+| Get all the campaigns | GET    | http://localhost:8080/campaigns          | null                                                 | all the campaigns from DB.                                                    |
 
 -------------
 # Examples:
