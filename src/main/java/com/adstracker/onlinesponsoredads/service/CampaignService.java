@@ -3,7 +3,7 @@ package com.adstracker.onlinesponsoredads.service;
 import com.adstracker.onlinesponsoredads.model.entity.Campaign;
 import com.adstracker.onlinesponsoredads.model.entity.Product;
 import com.adstracker.onlinesponsoredads.repository.CampaignRepo;
-import com.adstracker.onlinesponsoredads.utilities.Constants;
+import com.adstracker.onlinesponsoredads.common.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
