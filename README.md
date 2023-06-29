@@ -1,6 +1,9 @@
 # online-sponsored-ads
 This project is focused on developing a powerful module that empowers sellers to effortlessly create and manage promotional campaigns for their products.
 
+The existing URL, http://localhost:8080, can be effortlessly changed to the following address: https://online-sponsored-ads-production.up.railway.app. By doing this, you will gain access to the deployed server, allowing you to conveniently view its functionality.
+</br> For example : </br> https://online-sponsored-ads-production.up.railway.app/products  
+
 
 | APIs                  | METHOD | URL                                      | Parameters                                           | Expected result                                                               |
 |-----------------------|--------|------------------------------------------|------------------------------------------------------|-------------------------------------------------------------------------------|   
