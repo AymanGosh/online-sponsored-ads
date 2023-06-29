@@ -4,37 +4,28 @@ import com.adstracker.onlinesponsoredads.model.entity.Campaign;
 import com.adstracker.onlinesponsoredads.model.entity.Product;
 import com.adstracker.onlinesponsoredads.service.CampaignService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/campaigns")
 public class CampaignController {
     @Autowired
-    private CampaignService campaignService; // bean
-    @GetMapping("get-campaign")
-    public Campaign getCampaignById(@RequestParam Integer campaignId){
-        return  campaignService.getCampaignById(campaignId);
-    }
+    private CampaignService campaignService;
     @GetMapping()
-    public List<Campaign> getAllCampaigns(){
-        return  campaignService.getAllCampaigns();
+    public ResponseEntity<List<Campaign>> getAllCampaigns(){
+        return  new ResponseEntity (campaignService.getAllCampaigns(),HttpStatus.OK);
     }
-
-
-
     @PostMapping
-    public Campaign saveCampaign(@RequestBody Campaign campaign) {
-        return campaignService.saveCampaign(campaign);
-
+    public ResponseEntity<Campaign> saveCampaign(@RequestBody Campaign campaign) {
+        return new ResponseEntity (campaignService.saveCampaign(campaign),HttpStatus.CREATED);
     }
-
-
     @GetMapping("/serve-ad")
-    //public ResponseEntity<Product> serveAd(@RequestParam("category") String category) {
-    public  Product serveAd(@RequestParam String category) {
-        return campaignService.serveAd(category);
-
+    public ResponseEntity<?> serveAd(@RequestParam("category") String category) {
+        Product promotedProduct=campaignService.serveAd(category);
+        if(promotedProduct.getProductName()==null) return   ResponseEntity.status(HttpStatus.NOT_FOUND).body("Serve Ad not found, make sure there are campaigns.");
+        return new ResponseEntity(promotedProduct, HttpStatus.OK);
     }
 }
