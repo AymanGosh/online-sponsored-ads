@@ -1,5 +1,6 @@
 package com.adstracker.onlinesponsoredads.controller;
 
+import com.adstracker.onlinesponsoredads.model.dto.ProductDto;
 import com.adstracker.onlinesponsoredads.model.entity.Product;
 import com.adstracker.onlinesponsoredads.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,11 @@ public class ProductController {
     @Autowired
     private ProductService productService;
     @GetMapping
-    public ResponseEntity<List<Product>> getAll(){
-        return new ResponseEntity(productService.getAll(), HttpStatus.OK );
+    public ResponseEntity<List<ProductDto>> getAll(){
+        return new ResponseEntity( ProductDto.fromEntityToDto(productService.getAll()), HttpStatus.OK );
     }
     @PostMapping
-    public ResponseEntity<Product> saveNewProduct(@RequestBody Product newProduct){
-        return new ResponseEntity(productService.saveNewProduct(newProduct),HttpStatus.CREATED);
+    public ResponseEntity<ProductDto> saveNewProduct(@RequestBody ProductDto newProduct){
+        return new ResponseEntity(productService.saveNewProduct(Product.DtoToEntity(newProduct)),HttpStatus.CREATED);
     }
 }

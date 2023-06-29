@@ -5,33 +5,24 @@ import com.adstracker.onlinesponsoredads.model.entity.Product;
 import com.adstracker.onlinesponsoredads.repository.CampaignRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-
 @Service
 public class CampaignService {
-
-
    @Autowired
    private CampaignRepo campaignRepo;
-
     @Autowired
     private ProductService productsService;
-
-
     public Campaign getCampaignById(Integer campaignId){
         return campaignRepo.findById(campaignId).get();
     }
     public List<Campaign> getAllCampaigns(){
         return campaignRepo.findAll();
     }
-
     public Campaign saveCampaign(Campaign campaign) {
         Campaign newCampaign = new Campaign();
         newCampaign.setCampaignName(campaign.getCampaignName());
@@ -48,24 +39,25 @@ public class CampaignService {
                         }).collect(Collectors.toList()));
         return campaignRepo.save(newCampaign);
     }
-
     public  Product serveAd(String category) {
         List<Campaign> activeCampaigns= getActiveCampaigns();
-        if (activeCampaigns.isEmpty()) {
-            Campaign highestBidCampaign = getHighestBidCampaign(campaignRepo.findAll());
-            Product promotedProduct = highestBidCampaign.getProducts().stream().findFirst().orElse(new Product());
-            return promotedProduct;
-        }
+        if (activeCampaigns.isEmpty()) {return getPromotedProductFromHighestCampaign();}
 
         List<Campaign> campaignsWithMatchingCategory = activeCampaigns.stream()
                 .filter(campaign -> campaign.getProducts().stream()
                         .anyMatch(product -> product.getProductCategory().equals(category)))
                 .collect(Collectors.toList());
+        if (campaignsWithMatchingCategory.isEmpty()) {return getPromotedProductFromHighestCampaign();}
 
         Campaign highestBidCampaign = getHighestBidCampaign(campaignsWithMatchingCategory);
-        Product promotedProduct = highestBidCampaign.getProducts().stream().filter(p->p.getProductCategory().equals(category)).findFirst().orElse(new Product());
+        Product promotedProduct = highestBidCampaign.getProducts().stream().filter(p->p.getProductCategory().equals(category)).findFirst().get();;
         return promotedProduct;
     }
+   public Product getPromotedProductFromHighestCampaign(){
+       Campaign highestBidCampaign = getHighestBidCampaign(campaignRepo.findAll());
+       Product promotedProduct = highestBidCampaign.getProducts().stream().findFirst().orElse(new Product());
+       return promotedProduct;
+   }
     public List<Campaign> getActiveCampaigns(){
         var campaignActiveDays =10;
         Date startDate = convertToDateViaSqlDate(LocalDate.now());
@@ -75,7 +67,6 @@ public class CampaignService {
     public Date convertToDateViaSqlDate(LocalDate dateToConvert) {
         return java.sql.Date.valueOf(dateToConvert);
     }
-
     private Campaign getHighestBidCampaign(List<Campaign> campaigns) {
         if(campaigns.isEmpty()) return new Campaign();
         return Collections.max(campaigns, Comparator.comparingDouble(Campaign::getBid));
