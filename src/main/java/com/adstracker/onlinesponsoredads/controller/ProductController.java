@@ -19,7 +19,7 @@ public class ProductController {
     public List<Product> getAll(){
         return productService.getAll();
     }
-    
+
     @PostMapping("/save-product")
     public Product saveNewProduct(@RequestBody Product newProduct){
         return productService.saveNewProduct(newProduct);
