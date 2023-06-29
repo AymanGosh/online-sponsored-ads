@@ -3,6 +3,7 @@ package com.adstracker.onlinesponsoredads.service;
 import com.adstracker.onlinesponsoredads.model.entity.Campaign;
 import com.adstracker.onlinesponsoredads.model.entity.Product;
 import com.adstracker.onlinesponsoredads.repository.CampaignRepo;
+import com.adstracker.onlinesponsoredads.utilities.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -59,9 +60,8 @@ public class CampaignService {
        return promotedProduct;
    }
     public List<Campaign> getActiveCampaigns(){
-        var campaignActiveDays =10;
         Date startDate = convertToDateViaSqlDate(LocalDate.now());
-        Date endDate = convertToDateViaSqlDate(LocalDate.now().plusDays(campaignActiveDays));
+        Date endDate = convertToDateViaSqlDate(LocalDate.now().plusDays(Constants.campaignActiveDays));
         return campaignRepo.findByStartDateBetween(startDate,endDate);
     }
     public Date convertToDateViaSqlDate(LocalDate dateToConvert) {
