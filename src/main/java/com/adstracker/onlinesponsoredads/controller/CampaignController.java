@@ -16,7 +16,7 @@ import java.util.List;
 public class CampaignController {
     @Autowired
     private CampaignService campaignService;
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<CampaignDto>> getAllCampaigns(){
         return  new ResponseEntity (CampaignDto.fromEntityToDto(campaignService.getAllCampaigns()),HttpStatus.OK);
     }
@@ -27,7 +27,7 @@ public class CampaignController {
     @GetMapping("/serve-ad")
     public ResponseEntity<?> serveAd(@RequestParam("category") String category) {
         Product promotedProduct=campaignService.serveAd(category);
-        if(promotedProduct.getProductName()==null) return   ResponseEntity.status(HttpStatus.NOT_FOUND).body("Serve Ad not found, make sure there are campaigns.");
+        if(promotedProduct.getProductName() == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Serve Ad not found, make sure there are campaigns.");
         return new ResponseEntity(ProductDto.fromEntityToDto(promotedProduct), HttpStatus.OK);
     }
 }

@@ -13,7 +13,7 @@ public class ProductService {
     public Product findProductById(Integer productId) {
         return productRepo.findByProductId(productId);
     }
-    public List<Product> getAll(){
+    public List<Product> getAllProducts(){
         return productRepo.findAll();
     }
     public Product saveNewProduct(Product newProduct){

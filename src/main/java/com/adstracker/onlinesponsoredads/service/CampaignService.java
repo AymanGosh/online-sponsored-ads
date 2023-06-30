@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 @Service
 public class CampaignService {
-   @Autowired
-   private CampaignRepo campaignRepo;
+    @Autowired
+    private CampaignRepo campaignRepo;
     @Autowired
     private ProductService productsService;
     public Campaign getCampaignById(Integer campaignId){
@@ -33,23 +33,25 @@ public class CampaignService {
                 .addAll(campaign
                         .getProducts()
                         .stream()
-                        .map(v -> {
-                            Product vv = productsService.findProductById(v.getProductId());
-                            vv.getCampaigns().add(newCampaign);
-                            return vv;
+                        .map(p -> {
+                            Product pp = productsService.findProductById(p.getProductId());
+                            pp.getCampaigns().add(newCampaign);
+                            return pp;
                         }).collect(Collectors.toList()));
         return campaignRepo.save(newCampaign);
     }
     public  Product serveAd(String category) {
-        List<Campaign> activeCampaigns= getActiveCampaigns();
-        if (activeCampaigns.isEmpty()) {return getPromotedProductFromHighestCampaign();}
-
+        List<Campaign> activeCampaigns = getActiveCampaigns();
+        if (activeCampaigns.isEmpty()) {
+            return getPromotedProductFromHighestCampaign();
+        }
         List<Campaign> campaignsWithMatchingCategory = activeCampaigns.stream()
                 .filter(campaign -> campaign.getProducts().stream()
                         .anyMatch(product -> product.getProductCategory().equals(category)))
                 .collect(Collectors.toList());
-        if (campaignsWithMatchingCategory.isEmpty()) {return getPromotedProductFromHighestCampaign();}
-
+        if (campaignsWithMatchingCategory.isEmpty()) {
+            return getPromotedProductFromHighestCampaign();
+        }
         Campaign highestBidCampaign = getHighestBidCampaign(campaignsWithMatchingCategory);
         Product promotedProduct = highestBidCampaign.getProducts().stream().filter(p->p.getProductCategory().equals(category)).findFirst().get();;
         return promotedProduct;

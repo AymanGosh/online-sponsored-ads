@@ -32,8 +32,8 @@ public class CampaignDto {
                 build();
     }
     public static List<CampaignDto> fromEntityToDto(List<Campaign> campaignsEntity){
-        List<CampaignDto> listOfCampaignDto = new ArrayList<>();
-        listOfCampaignDto.addAll(campaignsEntity.stream().map(ce->CampaignDto.fromEntityToDto(ce)).collect(Collectors.toList()));
-        return listOfCampaignDto;
+        List<CampaignDto> listOfCampaignsDto = new ArrayList<>();
+        listOfCampaignsDto.addAll(campaignsEntity.stream().map(ce->CampaignDto.fromEntityToDto(ce)).collect(Collectors.toList()));
+        return listOfCampaignsDto;
     }
 }

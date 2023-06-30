@@ -15,8 +15,8 @@ public class ProductController {
     @Autowired
     private ProductService productService;
     @GetMapping
-    public ResponseEntity<List<ProductDto>> getAll(){
-        return new ResponseEntity( ProductDto.fromEntityToDto(productService.getAll()), HttpStatus.OK );
+    public ResponseEntity<List<ProductDto>> getAllProducts(){
+        return new ResponseEntity( ProductDto.fromEntityToDto(productService.getAllProducts()), HttpStatus.OK );
     }
     @PostMapping
     public ResponseEntity<ProductDto> saveNewProduct(@RequestBody ProductDto newProduct){
