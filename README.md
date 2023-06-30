@@ -5,12 +5,12 @@ The existing URL, http://localhost:8080, can be effortlessly changed to the foll
 </br> For example : </br> https://online-sponsored-ads-production.up.railway.app/products  
 
 
-| APIs                  | METHOD | URL                                      | Parameters                                           | Expected result                                                               |
-|-----------------------|--------|------------------------------------------|------------------------------------------------------|-------------------------------------------------------------------------------|   
-| Create campaign       | POST   | http://localhost:8080/campaigns          | @RequestBody = campaignName::String & products::LIST | a campaign is created.                                                        |
-| Serve Ad              | GET    | http://localhost:8080/campaigns/serve-ad | @RequestParam = category::String                     | highest-bid promoted product from active campaigns in the specified category. |
-| Get all the products  | GET    | http://localhost:8080/products           | null                                                 | all the products from DB.                                                     |
-| Get all the campaigns | GET    | http://localhost:8080/campaigns          | null                                                 | all the campaigns from DB.                                                    |
+| APIs                  | METHOD | URL                                      | Parameters                                                                          | Expected result                                                               |
+|-----------------------|--------|------------------------------------------|-------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|   
+| Create campaign       | POST   | http://localhost:8080/campaigns          | @RequestBody = campaignName::String & startDate::Date & bid:Double & products::LIST | a campaign is created.                                                        |
+| Serve Ad              | GET    | http://localhost:8080/campaigns/serve-ad | @RequestParam = category::String                                                    | highest-bid promoted product from active campaigns in the specified category. |
+| Get all the products  | GET    | http://localhost:8080/products           | null                                                                                | all the products from DB.                                                     |
+| Get all the campaigns | GET    | http://localhost:8080/campaigns          | null                                                                                | all the campaigns from DB.                                                    |
 
 -------------
 # Examples:
